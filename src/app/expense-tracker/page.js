@@ -2,41 +2,51 @@
 
 import { useState } from "react";
 import "./expense.css";
+import Sidebar from "../../components/Sidebar";
+import Navbar  from "../../components/Navbar";
 
 const sampleTransactions = [
-  { id: 1, name: "Whole Foods Market", icon: "🛒", category: "Groceries", date: "Oct 24, 2023", amount: 245.50 },
-  { id: 2, name: "Emirates – Business Class", icon: "✈️", category: "Transport", date: "Oct 22, 2023", amount: 4820.00 },
-  { id: 3, name: "Harvard Online Ed", icon: "🎓", category: "Education", date: "Oct 19, 2023", amount: 1200.00 },
-  { id: 4, name: "Michelin Dinner", icon: "🍽️", category: "Fine Dining", date: "Oct 17, 2023", amount: 620.00 },
-  { id: 5, name: "Apple Store", icon: "💻", category: "Electronics", date: "Oct 15, 2023", amount: 1999.00 },
-  { id: 6, name: "Gym Membership", icon: "💪", category: "Health", date: "Oct 12, 2023", amount: 150.00 },
-  { id: 7, name: "Amazon Prime", icon: "📦", category: "Subscriptions", date: "Oct 10, 2023", amount: 14.99 },
-  { id: 8, name: "Uber Eats", icon: "🍕", category: "Food", date: "Oct 8, 2023", amount: 45.75 },
-  { id: 9, name: "Netflix", icon: "🎬", category: "Subscriptions", date: "Oct 5, 2023", amount: 15.99 },
-  { id: 10, name: "Pharmacy", icon: "💊", category: "Health", date: "Oct 2, 2023", amount: 89.30 },
+  { id: 1,  name: "Whole Foods Market",       icon: "🛒", category: "Groceries",     date: "Oct 24, 2023", amount: 20450.00  },
+  { id: 2,  name: "Emirates – Business Class", icon: "✈️", category: "Transport",     date: "Oct 22, 2023", amount: 401500.00 },
+  { id: 3,  name: "Harvard Online Ed",         icon: "🎓", category: "Education",     date: "Oct 19, 2023", amount: 99900.00  },
+  { id: 4,  name: "Michelin Dinner",           icon: "🍽️", category: "Fine Dining",   date: "Oct 17, 2023", amount: 51600.00  },
+  { id: 5,  name: "Apple Store",               icon: "💻", category: "Electronics",   date: "Oct 15, 2023", amount: 166500.00 },
+  { id: 6,  name: "Gym Membership",            icon: "💪", category: "Health",        date: "Oct 12, 2023", amount: 12500.00  },
+  { id: 7,  name: "Amazon Prime",              icon: "📦", category: "Subscriptions", date: "Oct 10, 2023", amount: 1499.00   },
+  { id: 8,  name: "Uber Eats",                 icon: "🍕", category: "Food",          date: "Oct 8, 2023",  amount: 3800.00   },
+  { id: 9,  name: "Netflix",                   icon: "🎬", category: "Subscriptions", date: "Oct 5, 2023",  amount: 649.00    },
+  { id: 10, name: "Pharmacy",                  icon: "💊", category: "Health",        date: "Oct 2, 2023",  amount: 7440.00   },
 ];
 
-const categories = ["Food", "Transport", "Groceries", "Fine Dining", "Education", "Electronics", "Health", "Subscriptions", "Entertainment", "Other"];
+const categories = [
+  "Food","Transport","Groceries","Fine Dining","Education",
+  "Electronics","Health","Subscriptions","Entertainment","Other",
+];
 
 const ITEMS_PER_PAGE = 3;
 
+// ── Rupee formatter ──────────────────────────────────────────────────────────
+const formatINR = (value) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(value);
+
 export default function ExpensePage() {
   const [transactions, setTransactions] = useState(sampleTransactions);
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
-  const [category, setCategory] = useState("Food");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [activeNav, setActiveNav] = useState("Expenses");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [title,        setTitle]        = useState("");
+  const [amount,       setAmount]       = useState("");
+  const [date,         setDate]         = useState("");
+  const [category,     setCategory]     = useState("Food");
+  const [currentPage,  setCurrentPage]  = useState(1);
+  const [searchQuery,  setSearchQuery]  = useState("");
 
   const totalSpending = transactions.reduce((sum, t) => sum + t.amount, 0);
 
   const topCategoryName = (() => {
     const counts = {};
-    transactions.forEach((t) => {
-      counts[t.category] = (counts[t.category] || 0) + t.amount;
-    });
+    transactions.forEach((t) => { counts[t.category] = (counts[t.category] || 0) + t.amount; });
     return Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
   })();
 
@@ -46,7 +56,7 @@ export default function ExpensePage() {
       t.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalPages = Math.ceil(filteredTransactions.length / ITEMS_PER_PAGE);
+  const totalPages            = Math.ceil(filteredTransactions.length / ITEMS_PER_PAGE);
   const paginatedTransactions = filteredTransactions.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
@@ -59,80 +69,31 @@ export default function ExpensePage() {
       name: title,
       icon: "💳",
       category,
-      date: new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      date: new Date(date).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" }),
       amount: parseFloat(amount),
     };
     setTransactions([newTransaction, ...transactions]);
-    setTitle("");
-    setAmount("");
-    setDate("");
-    setCategory("Food");
+    setTitle(""); setAmount(""); setDate(""); setCategory("Food");
     setCurrentPage(1);
   };
 
-  const handleDelete = (id) => {
-    setTransactions(transactions.filter((t) => t.id !== id));
-  };
-
-  const navItems = [
-    { name: "Dashboard", icon: "▣" },
-    { name: "Expenses", icon: "💳" },
-    { name: "Budget", icon: "📊" },
-    { name: "Subscriptions", icon: "🔄" },
-    { name: "Savings Goals", icon: "🎯" },
-    { name: "Notifications", icon: "🔔" },
-  ];
+  const handleDelete = (id) => setTransactions(transactions.filter((t) => t.id !== id));
 
   return (
     <div className="app-wrapper">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <span className="logo-title">Finance Ledger</span>
-          <span className="logo-sub">PRESTIGE PRIVATE BANKING</span>
-        </div>
 
-        <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              className={`nav-item ${activeNav === item.name ? "active" : ""}`}
-              onClick={() => setActiveNav(item.name)}
-            >
-              <span className="nav-icon">{item.icon}</span>
-              {item.name}
-            </button>
-          ))}
-        </nav>
+      <Sidebar />
 
-        <div className="sidebar-bottom">
-          <button className="nav-item">⚙ Settings</button>
-          <button className="nav-item">⎋ Logout</button>
-        </div>
-      </aside>
-
-      {/* Main Content */}
       <main className="main-content">
-        {/* Top Bar */}
-        <div className="topbar">
-          <h1 className="page-title">Expenses</h1>
-          <div className="topbar-right">
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Global search..."
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-              />
-              <span className="search-icon">🔍</span>
-            </div>
-            <button className="icon-btn">🔔</button>
-            <div className="avatar">JD</div>
-          </div>
-        </div>
 
-        {/* Content Grid */}
+        <Navbar
+          title="Expenses"
+          searchValue={searchQuery}
+          onSearch={(val) => { setSearchQuery(val); setCurrentPage(1); }}
+        />
+
         <div className="content-grid">
+
           {/* Record Expense Card */}
           <div className="card record-card">
             <div className="card-header">
@@ -156,7 +117,7 @@ export default function ExpensePage() {
               <div className="field-group">
                 <label className="field-label">AMOUNT</label>
                 <div className="input-wrapper">
-                  <span className="prefix">$</span>
+                  <span className="prefix">₹</span>   {/* ← changed from $ */}
                   <input
                     type="number"
                     placeholder="0.00"
@@ -182,9 +143,7 @@ export default function ExpensePage() {
             <label className="field-label">CATEGORY</label>
             <div className="select-wrapper">
               <select value={category} onChange={(e) => setCategory(e.target.value)} className="select-input">
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
+                {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
               </select>
               <span className="select-arrow">▼</span>
             </div>
@@ -197,16 +156,15 @@ export default function ExpensePage() {
           {/* Stats Panel */}
           <div className="stats-panel">
             <div className="stat-cards-row">
-              {/* Monthly Spending */}
+
               <div className="stat-card">
                 <span className="stat-label">MONTHLY SPENDING</span>
                 <span className="stat-value">
-                  ${totalSpending.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                  {formatINR(totalSpending)}          {/* ← ₹ formatted */}
                   <span className="stat-arrow up">↑</span>
                 </span>
               </div>
 
-              {/* Top Category */}
               <div className="stat-card">
                 <span className="stat-label">TOP CATEGORY</span>
                 <div className="stat-category">
@@ -215,7 +173,6 @@ export default function ExpensePage() {
                 </div>
               </div>
 
-              {/* Wallet Status */}
               <div className="stat-card">
                 <span className="stat-label">WALLET STATUS</span>
                 <span className="stat-value wallet-status">
@@ -237,11 +194,7 @@ export default function ExpensePage() {
               <table className="transactions-table">
                 <thead>
                   <tr>
-                    <th>EXPENSE</th>
-                    <th>CATEGORY</th>
-                    <th>DATE</th>
-                    <th>AMOUNT</th>
-                    <th>ACTIONS</th>
+                    <th>EXPENSE</th><th>CATEGORY</th><th>DATE</th><th>AMOUNT</th><th>ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -255,44 +208,29 @@ export default function ExpensePage() {
                       </td>
                       <td><span className="category-badge">{t.category}</span></td>
                       <td className="date-cell">{t.date}</td>
-                      <td className="amount-cell">${t.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
-                      <td>
-                        <button className="delete-btn" onClick={() => handleDelete(t.id)}>🗑</button>
-                      </td>
+                      <td className="amount-cell">{formatINR(t.amount)}</td>  {/* ← ₹ formatted */}
+                      <td><button className="delete-btn" onClick={() => handleDelete(t.id)}>🗑</button></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              {/* Pagination */}
               <div className="pagination">
                 <span className="pagination-info">
-                  Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filteredTransactions.length)}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredTransactions.length)} of {filteredTransactions.length} entries
+                  Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filteredTransactions.length)}–
+                  {Math.min(currentPage * ITEMS_PER_PAGE, filteredTransactions.length)} of {filteredTransactions.length} entries
                 </span>
                 <div className="pagination-controls">
-                  <button
-                    className="page-btn"
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((p) => p - 1)}
-                  >‹</button>
+                  <button className="page-btn" disabled={currentPage === 1}         onClick={() => setCurrentPage((p) => p - 1)}>‹</button>
                   {Array.from({ length: Math.min(totalPages, 3) }, (_, i) => i + 1).map((page) => (
-                    <button
-                      key={page}
-                      className={`page-btn ${currentPage === page ? "active" : ""}`}
-                      onClick={() => setCurrentPage(page)}
-                    >
-                      {page}
-                    </button>
+                    <button key={page} className={`page-btn ${currentPage === page ? "active" : ""}`} onClick={() => setCurrentPage(page)}>{page}</button>
                   ))}
-                  <button
-                    className="page-btn"
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((p) => p + 1)}
-                  >›</button>
+                  <button className="page-btn" disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => p + 1)}>›</button>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </main>
     </div>
