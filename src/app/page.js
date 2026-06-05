@@ -1,5 +1,6 @@
+// app/page.js — root redirect to login
 import { redirect } from "next/navigation";
 
-export default function Home() {
+export default function RootPage() {
   redirect("/dashboard");
 }
