@@ -1,42 +1,34 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import "./login.css";
 
 export default function LoginPage() {
-  const router = useRouter();
-
-  const [email, setEmail]       = useState("");
+  const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
-  const [showPw, setShowPw]     = useState(false);
-  const [loading, setLoading]   = useState(false);
-  const [errors, setErrors]     = useState({});
+  const [showPw,   setShowPw]   = useState(false);
+  const [loading,    setLoading]    = useState(false);
+  const [errors,     setErrors]     = useState({});
+  const [rememberMe, setRememberMe] = useState(false);
 
   const validate = () => {
     const e = {};
-    if (!email)                           e.email    = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) e.email    = "Enter a valid email";
-    if (!password)                        e.password = "Password is required";
-    else if (password.length < 6)         e.password = "Minimum 6 characters";
+    if (!email)                            e.email    = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(email))  e.email    = "Enter a valid email";
+    if (!password)                         e.password = "Password is required";
+    else if (password.length < 6)          e.password = "Minimum 6 characters";
     return e;
   };
 
-const handleSubmit = () => {
-  console.log("LOGIN CLICKED");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
 
-  const errs = validate();
-
-  if (Object.keys(errs).length) {
-    setErrors(errs);
-    return;
-  }
-
-  router.push("/dashboard");
-};
-
-  const handleKey = (e) => {
-    if (e.key === "Enter") handleSubmit();
+    setLoading(true);
+    window.location.href = "/dashboard";
   };
+
+  const handleKey = (e) => { if (e.key === "Enter") handleSubmit(e); };
 
   return (
     <div style={s.page}>
@@ -49,52 +41,54 @@ const handleSubmit = () => {
             <div style={s.cardSub}>Sign in to your Finance Ledger account</div>
           </div>
 
-          {errors.general && (
-            <div style={s.generalError}>{errors.general}</div>
-          )}
+          {errors.general && <div style={s.generalError}>{errors.general}</div>}
 
-          <Field
-            label="Email Address"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(v) => { setEmail(v); setErrors((p) => ({ ...p, email: "" })); }}
-            onKeyDown={handleKey}
-            error={errors.email}
-            rightIcon={<EmailIcon />}
-          />
+          <form onSubmit={handleSubmit} noValidate>
+            <Field
+              label="Email Address"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(v) => { setEmail(v); setErrors((p) => ({ ...p, email: "" })); }}
+              error={errors.email}
+              rightIcon={<EmailIcon />}
+            />
 
-          <Field
-            label="Password"
-            type={showPw ? "text" : "password"}
-            placeholder="Enter your password"
-            value={password}
-            onChange={(v) => { setPassword(v); setErrors((p) => ({ ...p, password: "" })); }}
-            onKeyDown={handleKey}
-            error={errors.password}
-            rightIcon={
-              <button style={s.eyeBtn} onClick={() => setShowPw((p) => !p)} type="button">
-                {showPw ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            }
-          />
+            <Field
+              label="Password"
+              type={showPw ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(v) => { setPassword(v); setErrors((p) => ({ ...p, password: "" })); }}
+              error={errors.password}
+              rightIcon={
+                <button style={s.eyeBtn} onClick={() => setShowPw((p) => !p)} type="button">
+                  {showPw ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              }
+            />
 
-          <div style={s.row}>
-            <label style={s.rememberWrap}>
-              <span style={s.checkBox} />
-              <span style={s.rememberLabel}>Remember me</span>
-            </label>
-            <a href="#" style={s.forgotLink}>Forgot password?</a>
-          </div>
+            <div style={s.row}>
+              <label style={s.rememberWrap}>
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  style={s.checkBox}
+                />
+                <span style={s.rememberLabel}>Remember me</span>
+              </label>
+              <a href="#" style={s.forgotLink}>Forgot password?</a>
+            </div>
 
-          <button
-            type="button"
-            style={{ ...s.submitBtn, opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? <Spinner /> : "Sign In →"}
-          </button>
+            <button
+              type="submit"
+              style={{ ...s.submitBtn, opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}
+              disabled={loading}
+            >
+              {loading ? <Spinner /> : "Sign In →"}
+            </button>
+          </form>
 
           <div style={s.divider}>
             <div style={s.dividerLine} />
@@ -118,7 +112,7 @@ const handleSubmit = () => {
   );
 }
 
-/* ─── Sub-components ─── */
+/* ── Sub-components ────────────────────────────────────────────── */
 
 function LeftPanel() {
   return (
@@ -133,7 +127,8 @@ function LeftPanel() {
           <span style={{ color: "#F5C518" }}>intelligently</span> managed.
         </div>
         <div style={s.leftDesc}>
-          Track every expense, hit every goal, and stay on top of your finances — all in one beautifully designed dashboard.
+          Track every expense, hit every goal, and stay on top of your
+          finances — all in one beautifully designed dashboard.
         </div>
         <div style={s.featureList}>
           {FEATURES.map((f) => <FeatureRow key={f.label} {...f} />)}
@@ -198,7 +193,7 @@ function Spinner() {
   );
 }
 
-/* ─── Icons ─── */
+/* ── Icons ─────────────────────────────────────────────────────── */
 
 const EmailIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -239,7 +234,7 @@ const GithubIcon = () => (
   </svg>
 );
 
-/* ─── Data ─── */
+/* ── Data ───────────────────────────────────────────────────────── */
 
 const FEATURES = [
   { icon: "📊", label: "Real-time Analytics", desc: "Live spending charts & budget health" },
@@ -247,7 +242,7 @@ const FEATURES = [
   { icon: "🔔", label: "Smart Alerts",         desc: "Get notified before overspending"    },
 ];
 
-/* ─── Styles ─── */
+/* ── Styles ─────────────────────────────────────────────────────── */
 
 const s = {
   page: {
@@ -307,8 +302,9 @@ const s = {
   row: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "20px" },
   rememberWrap:  { display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" },
   checkBox: {
-    width: "16px", height: "16px", borderRadius: "4px",
-    border: "1px solid rgba(255,255,255,0.15)", background: "#18181F", display: "inline-block",
+    width: "15px", height: "15px",
+    accentColor: "#F5C518",
+    cursor: "pointer",
   },
   rememberLabel: { fontSize: "13px", color: "#9898B8" },
   forgotLink:    { fontSize: "13px", color: "#F5C518", fontWeight: 600, textDecoration: "none" },
@@ -317,7 +313,7 @@ const s = {
     color: "#111118", fontSize: "15px", fontWeight: 700,
     border: "none", borderRadius: "8px",
     display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-    fontFamily: "'DM Sans', 'Raleway', sans-serif",
+    fontFamily: "'DM Sans', 'Raleway', sans-serif", marginBottom: "0",
   },
   divider:     { display: "flex", alignItems: "center", margin: "20px 0", gap: "10px" },
   dividerLine: { flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" },

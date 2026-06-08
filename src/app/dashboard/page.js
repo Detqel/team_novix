@@ -77,7 +77,10 @@ export default function DashboardPage() {
     setTimeout(() => setToast(""), 2500);
   };
 
-  const handleLogout = () => router.push("/login"); // ✅ back to login
+  const handleLogout = () => {
+  alert("Logout clicked");
+  router.push("/login");
+};
 
   return (
     <div className="dashboard-layout">
