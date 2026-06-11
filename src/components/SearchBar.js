@@ -4,13 +4,13 @@ import { useState } from "react";
 export default function SearchBar({ searchValue = "", onSearch }) {
   const [query, setQuery] = useState(searchValue);
 
-  const handleSearch = (v) => {
-    setQuery(v);
-    onSearch?.(v);
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    onSearch?.(e.target.value);
   };
 
   return (
-    <div style={s.searchBox}>
+    <div style={s.wrap}>
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
         stroke="#6E6D67" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
         style={{ flexShrink: 0 }}>
@@ -21,20 +21,20 @@ export default function SearchBar({ searchValue = "", onSearch }) {
         type="text"
         placeholder="Search entries..."
         value={query}
-        onChange={(e) => handleSearch(e.target.value)}
-        style={s.searchInput}
+        onChange={handleChange}
+        style={s.input}
       />
     </div>
   );
 }
 
 const s = {
-  searchBox: {
+  wrap: {
     display: "flex", alignItems: "center", background: "#1A1A20",
     border: "1px solid rgba(255,255,255,0.06)", borderRadius: "8px",
     padding: "8px 12px", gap: "8px", width: "200px",
   },
-  searchInput: {
+  input: {
     background: "none", border: "none", outline: "none",
     fontFamily: "'Raleway', sans-serif", fontSize: "12px",
     color: "#C8C6BE", width: "100%",

@@ -83,12 +83,14 @@ export default function NotificationDropdown() {
 }
 
 const s = {
-  iconBtn: {
-    width: "34px", height: "34px", borderRadius: "8px", background: "#1A1A20",
-    border: "1px solid rgba(255,255,255,0.06)", display: "flex",
-    alignItems: "center", justifyContent: "center",
-    cursor: "pointer", position: "relative", transition: "background 0.18s",
-  },
+ iconBtn: {
+  width: "34px", height: "34px", borderRadius: "8px", background: "#1A1A20",
+  border: "1px solid rgba(255,255,255,0.06)", display: "flex",
+  alignItems: "center", justifyContent: "center",
+  cursor: "pointer", position: "relative", transition: "background 0.18s",
+  flexShrink: 0,   // ← add
+  outline: "none", // ← add
+},
   badge: {
     position: "absolute", top: "4px", right: "4px",
     width: "14px", height: "14px", borderRadius: "50%",
