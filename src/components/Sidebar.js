@@ -39,7 +39,7 @@ const NAV_ITEMS = [
   },
   {
     label: "Subscriptions",
-    href: "/subscriptions",
+    href: "/subscription",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <line x1="8" y1="6" x2="21" y2="6"/>
