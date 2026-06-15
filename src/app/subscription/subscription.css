@@ -338,7 +338,8 @@ select:focus {
 }
 
 select option {
-  background: white;
+   background-color: #1c2030;
+  color: #e8eaf0;
 }
 
 .btn {

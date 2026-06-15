@@ -261,6 +261,10 @@ select {
   width: 100%;
   outline: none;
 }
+select option {
+  background-color: #1c2030;
+  color: #e8eaf0;
+}
 
 input:focus,
 select:focus {
