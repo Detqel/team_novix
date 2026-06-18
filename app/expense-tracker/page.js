@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import "./expense.css";
 
 const sampleTransactions = [
@@ -21,7 +23,24 @@ const categories = ["Food", "Transport", "Groceries", "Fine Dining", "Education"
 const ITEMS_PER_PAGE = 3;
 
 export default function ExpensePage() {
-  const [transactions, setTransactions] = useState(sampleTransactions);
+ const [transactions, setTransactions] = useState([]);
+  useEffect(() => {
+  fetch("http://localhost:5000/expenses")
+    .then((res) => res.json())
+    .then((data) => {
+      const formatted = data.map((item) => ({
+        id: item.id,
+        name: item.description,
+        icon: "💳",
+        category: item.category,
+        date: new Date(item.expense_date).toLocaleDateString(),
+        amount: parseFloat(item.amount),
+      }));
+
+      setTransactions(formatted);
+    })
+    .catch((err) => console.error(err));
+}, []);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -52,24 +71,31 @@ export default function ExpensePage() {
     currentPage * ITEMS_PER_PAGE
   );
 
-  const handleAddExpense = () => {
-    if (!title || !amount || !date) return;
-    const newTransaction = {
-      id: Date.now(),
-      name: title,
-      icon: "💳",
-      category,
-      date: new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
-      amount: parseFloat(amount),
-    };
-    setTransactions([newTransaction, ...transactions]);
-    setTitle("");
-    setAmount("");
-    setDate("");
-    setCategory("Food");
-    setCurrentPage(1);
-  };
+ const handleAddExpense = async () => {
+  if (!title || !amount || !date) return;
 
+  try {
+    const response = await fetch("http://127.0.0.1:5000/expenses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description: title,
+        amount: parseFloat(amount),
+        category,
+        expense_date: date,
+        payment_mode: "UPI",
+      }),
+    });
+
+    console.log(await response.json());
+
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
   const handleDelete = (id) => {
     setTransactions(transactions.filter((t) => t.id !== id));
   };
