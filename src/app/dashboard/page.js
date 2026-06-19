@@ -33,7 +33,8 @@ export default function DashboardPage() {
 
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
-  fetch("http://localhost:5000/expenses")
+  console.log("API URL =", process.env.NEXT_PUBLIC_API_URL);
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`)
     .then((res) => res.json())
     .then((data) => {
   console.log("DB DATA:", data);
@@ -129,7 +130,7 @@ export default function DashboardPage() {
           <div className="transactions-card">
   <span className="chart-title">Spending by Category</span>
 
-  <div style={{ width: "100%", height: 280 }}>
+  <div className="pie-chart-container">
     <ResponsiveContainer>
       <PieChart>
         <Pie
