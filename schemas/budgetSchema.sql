@@ -1,0 +1,10 @@
+CREATE TABLE budgets (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    category VARCHAR(50) NOT NULL,
+    budget_amount DECIMAL(10,2) NOT NULL,
+    month INTEGER NOT NULL,
+    year INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

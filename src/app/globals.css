@@ -1,0 +1,171 @@
+body {
+  margin: 0;
+  background: #0b0b0f;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* LAYOUT */
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 250px;
+  background: #17171f;
+  padding: 25px;
+  border-right: 1px solid #2a2a35;
+}
+
+.sidebar h1 {
+  color: #F5C518;
+  font-size: 28px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 40px;
+}
+
+.sidebar li {
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: #d1d1d8;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background: rgba(245,197,24,0.12);
+  color: #F5C518;
+}
+
+/* MAIN */
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #111118;
+}
+
+/* TITLE */
+
+.main-content h1 {
+  color: #F5C518;
+  margin-bottom: 25px;
+}
+
+/* CARD */
+
+.card {
+  background: #18181F;
+  border: 1px solid #2a2a35;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 0 20px rgba(245,197,24,0.05);
+  margin-bottom: 20px;
+}
+
+/* BUTTON — reset all, style via classes or inline styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+button.btn-primary {
+  background: #F5C518;
+  color: black;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* INPUT — reset, let components style themselves */
+input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+/* LOGIN */
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0b0f;
+}
+
+.login-box {
+  width: 350px;
+  background: #18181F;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(245,197,24,0.08);
+}
+
+/* CARDS ROW */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card h3 {
+  color: #9898B8;
+  margin-bottom: 10px;
+}
+
+.card h2 {
+  color: white;
+  font-size: 30px;
+}
+
+/* CHART SECTION */
+
+.chart-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.chart-card {
+  height: 350px;
+}
+
+.fake-chart {
+  height: 250px;
+  border-radius: 20px;
+  margin-top: 20px;
+  background: linear-gradient(180deg, rgba(245,197,24,0.2), transparent);
+}
+
+.donut-card {
+  text-align: center;
+}
+
+.donut {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin: 20px auto;
+  background: conic-gradient(
+    #F5C518 0% 60%,
+    #444 60% 85%,
+    #222 85% 100%
+  );
+}
