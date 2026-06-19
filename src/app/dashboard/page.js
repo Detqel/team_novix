@@ -33,11 +33,10 @@ export default function DashboardPage() {
 
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
-  console.log("API URL =", process.env.NEXT_PUBLIC_API_URL);
+  
   fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`)
     .then((res) => res.json())
     .then((data) => {
-  console.log("DB DATA:", data);
       const formatted = data.map((item) => ({
         id: item.id,
         desc: item.description,
