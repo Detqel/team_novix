@@ -99,7 +99,7 @@ export default function BudgetPage() {
       { id: 2, name: "Transport",       limit: 4000,  spent: 1800 },
       { id: 3, name: "Entertainment",   limit: 3000,  spent: 2700 },
       { id: 4, name: "Utilities",       limit: 5000,  spent: 4900 },
-      { id: 5, name: "Shopping",        limit: 8000,  spent: 2100 },
+      { id: 5, name: "Shopping",        limit: 8000,  spent: 2100 }, 
       { id: 6, name: "Health & Fitness",limit: 3000,  spent: 600  },
     ];
 
