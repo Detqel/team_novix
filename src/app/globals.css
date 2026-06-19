@@ -169,3 +169,38 @@ input, select, textarea {
     #222 85% 100%
   );
 }
+:root {
+  --bg: #0E0E12;
+  --surface: #151820;
+  --surface2: #1A1A20;
+  --gold: #D4A017;
+  --text: #C8C6BE;
+  --muted: #9E9D96;
+  --border: rgba(255,255,255,0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.btn {
+  background: var(--gold);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+input,
+select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}

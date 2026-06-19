@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 import "./subscription.css";
 
 // ─── NAV ITEMS ────────────────────────────────────────────────────────────────
@@ -78,102 +80,7 @@ const NAV_ITEMS = [
   },
 ];
 
-// ─── SIDEBAR ──────────────────────────────────────────────────────────────────
-function Sidebar({ onLogout }) {
-  const pathname = usePathname();
 
-  return (
-    <aside style={sidebarStyles.sidebar}>
-      <div style={sidebarStyles.brand}>
-        <div style={sidebarStyles.brandIcon}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-            <rect x="2" y="2" width="8" height="8" rx="1.5"/>
-            <rect x="14" y="2" width="8" height="8" rx="1.5"/>
-            <rect x="2" y="14" width="8" height="8" rx="1.5"/>
-            <rect x="14" y="14" width="8" height="8" rx="1.5" opacity="0.4"/>
-          </svg>
-        </div>
-        <div>
-          <div style={sidebarStyles.brandName}>Finance Ledger</div>
-          <div style={sidebarStyles.brandSub}>Prestige Private Banking</div>
-        </div>
-      </div>
-
-      <nav style={sidebarStyles.nav}>
-        {NAV_ITEMS.map(({ label, href, icon }) => {
-          const isActive = pathname === href || pathname?.startsWith(href + "/");
-          return (
-            <Link
-              key={label}
-              href={href}
-              style={{
-                ...sidebarStyles.navItem,
-                ...(isActive ? sidebarStyles.navItemActive : {}),
-              }}
-            >
-              <span style={{ ...sidebarStyles.navIcon, ...(isActive ? sidebarStyles.navIconActive : {}) }}>
-                {icon}
-              </span>
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div style={sidebarStyles.bottom}>
-        <button
-          style={sidebarStyles.logoutBtn}
-          onClick={onLogout}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = "#C8C6BE";
-            e.currentTarget.style.background = "rgba(212,160,23,0.08)";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = "#6E6D67";
-            e.currentTarget.style.background = "none";
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Logout
-        </button>
-      </div>
-    </aside>
-  );
-}
-
-// ─── NAVBAR ───────────────────────────────────────────────────────────────────
-function Navbar({ title = "My Subscriptions", searchValue = "", onSearch }) {
-  return (
-    <header style={navbarStyles.topbar}>
-      <h1 style={navbarStyles.title}>{title}</h1>
-      <div style={navbarStyles.actions}>
-        <div style={navbarStyles.searchWrap}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E6D67" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input
-            style={navbarStyles.searchInput}
-            type="text"
-            placeholder="Search..."
-            value={searchValue}
-            onChange={e => onSearch?.(e.target.value)}
-          />
-        </div>
-        <button style={navbarStyles.iconBtn}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9D96" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 01-3.46 0"/>
-          </svg>
-        </button>
-        <div style={navbarStyles.avatar}>FL</div>
-      </div>
-    </header>
-  );
-}
 
 // ─── SUBSCRIPTION PAGE ────────────────────────────────────────────────────────
 export default function SubscriptionPage() {
