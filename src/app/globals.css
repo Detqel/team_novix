@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
 body {
   margin: 0;
   background: #0b0b0f;
@@ -169,7 +171,6 @@ input, select, textarea {
     #222 85% 100%
   );
 }
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
 *,
 *::before,

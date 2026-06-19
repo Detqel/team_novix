@@ -91,8 +91,10 @@ export default function BudgetPage() {
       "#f0c060", "#60d0a0", "#60a8f0", "#c07af0",
       "#f08060", "#80d0f0", "#f0a0c0",
     ];
+   
 
-    const budgets = [
+
+    let budgets = [
       { id: 1, name: "Food & Dining",   limit: 12000, spent: 4200 },
       { id: 2, name: "Transport",       limit: 4000,  spent: 1800 },
       { id: 3, name: "Entertainment",   limit: 3000,  spent: 2700 },
@@ -143,7 +145,7 @@ export default function BudgetPage() {
         const cls = pct >= 100 ? "over" : pct >= 80 ? "warn" : "";
         return `
           <div class="budget-item">
-            <div class="budget-header">
+               <div class="budget-header">
               <div class="budget-name">${b.name}</div>
               <div class="budget-amounts"><strong>${fmt(b.spent)}</strong> / ${fmt(b.limit)}</div>
             </div>
@@ -154,7 +156,7 @@ export default function BudgetPage() {
           </div>`;
       }).join("");
     }
-
+  
     function renderTransactions() {
       const el = document.getElementById("txList");
       el.innerHTML = [...transactions].reverse().slice(0, 6).map(t => `
@@ -298,9 +300,14 @@ export default function BudgetPage() {
                       <option value="">Select category</option>
                     </select>
                   </div>
-                  <button className="btn" onClick={() => window.addTransaction()}>
-                    + Add Expense
-                  </button>
+                  <button className="btn"onClick={() => {
+            if (typeof window !== "undefined" && window.addTransaction) {
+                window.addTransaction();
+                        }
+                          }}
+>
+                         + Add Expense
+                        </button>
                 </div>
                 <div className="panel-title" style={{ marginTop: "8px" }}>Recent Transactions</div>
                 <div className="tx-list" id="txList"></div>

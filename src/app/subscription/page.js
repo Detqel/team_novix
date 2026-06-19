@@ -87,6 +87,8 @@ export default function SubscriptionPage() {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    
+
     let subs = [
       { id: 1, name: "Netflix",    icon: "🎬", amount: 499, cat: "Entertainment", cycle: "monthly", day: 5,  status: "active" },
       { id: 2, name: "Spotify",    icon: "🎵", amount: 119, cat: "Music",         cycle: "monthly", day: 10, status: "active" },
@@ -308,9 +310,14 @@ export default function SubscriptionPage() {
                   <input type="number" id="sDay" />
                 </div>
 
-                <button className="btn" onClick={() => window.addSub()}>
-                  + Add Subscription
-                </button>
+                <button className="btn"onClick={() => {
+    if (typeof window !== "undefined" && window.addSub) {
+      window.addSub();
+    }
+  }}
+   >
+      + Add Subscription
+     </button>
               </div>
 
               <div className="panel">
