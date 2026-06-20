@@ -115,6 +115,7 @@ export default function DashboardPage() {
         <Navbar title="Executive Overview" searchValue={search} onSearch={setSearch} />
 
         <div className="content">
+          
 
           {/* Stats */}
           <div className="stat-grid">
