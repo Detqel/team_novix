@@ -1,9 +1,11 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import "./dashboard.css";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import Sidebar from "@/components/Sidebar";
 import Navbar  from "@/components/Navbar";
+import { Legend } from "recharts";
 
 const CAT_COLORS = {
   Food: "#1D9E75", Transport: "#378ADD", Shopping: "#D4537E",
@@ -29,7 +31,26 @@ const todayStr = ()  => new Date().toISOString().split("T")[0];
 export default function DashboardPage() {
   const router = useRouter();
 
-  const [expenses, setExpenses]     = useState(SAMPLE_EXPENSES);
+  const [expenses, setExpenses] = useState([]);
+  useEffect(() => {
+  
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses`)
+    .then((res) => res.json())
+    .then((data) => {
+      const formatted = data.map((item) => ({
+        id: item.id,
+        desc: item.description,
+        amount: parseFloat(item.amount),
+        cat: item.category,
+        date: item.expense_date,
+        mode: item.payment_mode,
+      }));
+
+      setExpenses(formatted);
+      alert("Data Loaded");
+    })
+    .catch((err) => console.error(err));
+}, []);
   const [nextId, setNextId]         = useState(7);
   const [filterCat, setFilterCat]   = useState("All");
   const [filterMode, setFilterMode] = useState("All");
@@ -56,6 +77,10 @@ export default function DashboardPage() {
   const catTotals  = filtered.reduce((acc, e) => { acc[e.cat] = (acc[e.cat] || 0) + e.amount; return acc; }, {});
   const maxCat     = Math.max(1, ...Object.values(catTotals));
   const sortedCats = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
+  const pieData = sortedCats.map(([name, value]) => ({
+  name,
+  value,
+}));
   const topCat     = sortedCats[0];
 
   const handleAdd = (e) => {
@@ -90,6 +115,7 @@ export default function DashboardPage() {
         <Navbar title="Executive Overview" searchValue={search} onSearch={setSearch} />
 
         <div className="content">
+          
 
           {/* Stats */}
           <div className="stat-grid">
@@ -101,48 +127,37 @@ export default function DashboardPage() {
 
           {/* Add form + Transactions */}
           <div className="middle-row">
+          <div className="transactions-card">
+  <span className="chart-title">Spending by Category</span>
 
-            <div className="chart-card">
-              <span className="chart-title">Add expense</span>
-              <form onSubmit={handleAdd} className="expense-form">
-                <div className="form-field full">
-                  <label>Description</label>
-                  <input type="text" placeholder="e.g. Grocery shopping"
-                    value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} />
-                </div>
-                <div className="form-row">
-                  <div className="form-field">
-                    <label>Amount (₹)</label>
-                    <div className="rupee-wrap">
-                      <span className="rupee-sym">₹</span>
-                      <input type="number" placeholder="0" min="0"
-                        value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} />
-                    </div>
-                  </div>
-                  <div className="form-field">
-                    <label>Category</label>
-                    <select value={form.cat} onChange={(e) => setForm({ ...form, cat: e.target.value })}>
-                      <option value="">Select category</option>
-                      {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </div>
-                </div>
-                <div className="form-row">
-                  <div className="form-field">
-                    <label>Date</label>
-                    <input type="date" value={form.date}
-                      onChange={(e) => setForm({ ...form, date: e.target.value })} />
-                  </div>
-                  <div className="form-field">
-                    <label>Payment mode</label>
-                    <select value={form.mode} onChange={(e) => setForm({ ...form, mode: e.target.value })}>
-                      {PAYMENT_MODES.map((m) => <option key={m} value={m}>{m}</option>)}
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" className="btn-add-expense">+ Add expense</button>
-              </form>
-            </div>
+  <div className="pie-chart-container">
+    <ResponsiveContainer>
+      <PieChart>
+        <Pie
+          data={pieData}
+          dataKey="value"
+          nameKey="name"
+          outerRadius={90}
+          label
+        >
+          {pieData.map((entry, index) => (
+            <Cell
+              key={index}
+              fill={
+                Object.values(CAT_COLORS)[
+                  index % Object.values(CAT_COLORS).length
+                ]
+              }
+            />
+          ))}
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
+    </ResponsiveContainer>
+  </div>
+</div>
+          
 
             <div className="transactions-card">
               <div className="txn-header">
@@ -181,7 +196,7 @@ export default function DashboardPage() {
                 ) : (
                   sortedCats.map(([cat, amt]) => (
                     <div className="cat-bar-row" key={cat}>
-                      <span className="cat-bar-label">{cat}</span>
+                      <span className="cat-bar-labelLine={false}">{cat}</span>
                       <div className="cat-bar-track">
                         <div className="cat-bar-fill" style={{
                           width: `${Math.round((amt / maxCat) * 100)}%`,
