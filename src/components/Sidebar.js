@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
 const NAV_ITEMS = [
   {
     label: "Dashboard",
@@ -61,7 +60,7 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }) {
   const pathname = usePathname();
   const router   = useRouter();
   
@@ -109,17 +108,17 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout */}
-      <div style={s.bottom}>
-        <button style={s.logoutBtn} onClick={handleLogout}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          Logout
-        </button>
-      </div>
+<div style={s.bottom}>
+  <button style={s.logoutBtn} onClick={handleLogout}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+    Logout
+  </button>
+</div>
 
     </aside>
   );
