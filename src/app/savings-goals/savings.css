@@ -1,283 +1,10 @@
 /* ===== SAVINGS GOALS PAGE STYLES ===== */
-
-:root {
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --bg-card: #1c1c1c;
-  --bg-card-hover: #222222;
-  --accent-gold: #f5c518;
-  --accent-gold-dim: #c9a010;
-  --accent-gold-light: #ffd740;
-  --text-primary: #ffffff;
-  --text-secondary: #aaaaaa;
-  --text-muted: #666666;
-  --border-color: #2a2a2a;
-  --border-gold: rgba(245, 197, 24, 0.3);
-  --success: #4caf50;
-  --warning: #ff9800;
-  --danger: #f44336;
-  --info: #2196f3;
-  --sidebar-width: 200px;
-  --font-main: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-main);
-  min-height: 100vh;
-  display: flex;
-}
-
-/* ===== SIDEBAR ===== */
-.sidebar {
-  width: var(--sidebar-width);
-  background-color: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  z-index: 100;
-  padding: 20px 0;
-}
-
-.sidebar-logo {
-  padding: 10px 20px 24px 20px;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 10px;
-}
-
-.sidebar-logo .brand-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--accent-gold);
-  letter-spacing: 0.5px;
-}
-
-.sidebar-logo .brand-sub {
-  font-size: 9px;
-  color: var(--text-muted);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.sidebar-nav {
-  flex: 1;
-  padding: 8px 0;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 20px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-left: 3px solid transparent;
-}
-
-.nav-item:hover {
-  color: var(--text-primary);
-  background-color: rgba(255, 255, 255, 0.04);
-}
-
-.nav-item.active {
-  color: var(--accent-gold);
-  background-color: rgba(245, 197, 24, 0.08);
-  border-left-color: var(--accent-gold);
-  font-weight: 500;
-}
-
-.nav-item .nav-icon {
-  font-size: 15px;
-  width: 18px;
-  text-align: center;
-}
-
-.sidebar-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border-color);
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.user-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 700;
-  color: #000;
-  flex-shrink: 0;
-}
-
-.user-info .user-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.user-info .user-badge {
-  font-size: 10px;
-  color: var(--accent-gold);
-}
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-  font-size: 12px;
-  cursor: pointer;
-  transition: color 0.2s;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.logout-btn:hover {
-  color: var(--text-secondary);
-}
-
-/* ===== MAIN LAYOUT ===== */
-.main-wrapper {
-  margin-left: var(--sidebar-width);
-  flex: 1;
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  padding: 28px 28px 28px 28px;
-  overflow-y: auto;
-}
-
-/* ===== TOP BAR ===== */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-}
-
-.topbar-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 8px 14px;
-  gap: 8px;
-  width: 220px;
-  transition: border-color 0.2s;
-}
-
-.search-bar:focus-within {
-  border-color: var(--border-gold);
-}
-
-.search-bar input {
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--text-secondary);
-  font-size: 12px;
-  width: 100%;
-}
-
-.search-bar input::placeholder {
-  color: var(--text-muted);
-}
-
-.search-bar .search-icon {
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-.icon-btn {
-  width: 34px;
-  height: 34px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 15px;
-  transition: all 0.2s;
-}
-
-.icon-btn:hover {
-  border-color: var(--border-gold);
-  color: var(--accent-gold);
-}
-
-/* ===== CONTENT GRID ===== */
 .content-grid {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 24px;
 }
 
-/* ===== SECTION HEADER ===== */
-.section-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.section-subtitle {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 3px;
-}
-
-/* ===== NEW GOAL BUTTON ===== */
 .btn-new-goal {
   display: flex;
   align-items: center;
@@ -301,6 +28,7 @@ body {
 }
 
 /* ===== GOALS GRID ===== */
+
 .goals-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -309,6 +37,7 @@ body {
 }
 
 /* ===== GOAL CARD ===== */
+
 .goal-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -375,7 +104,6 @@ body {
   gap: 16px;
 }
 
-/* ===== CIRCULAR PROGRESS ===== */
 .circular-progress {
   position: relative;
   width: 64px;
@@ -438,7 +166,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ===== NEW MILESTONE CARD ===== */
 .new-milestone-card {
   background-color: transparent;
   border: 1px dashed var(--border-color);
@@ -490,6 +217,7 @@ body {
 }
 
 /* ===== AGGREGATE SECTION ===== */
+
 .aggregate-section {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -527,7 +255,6 @@ body {
   color: var(--accent-gold);
 }
 
-/* ===== INTELLIGENCE PANEL ===== */
 .intelligence-panel {
   display: flex;
   flex-direction: column;
@@ -560,41 +287,6 @@ body {
   color: var(--accent-gold-light);
 }
 
-/* ===== TABS ===== */
-.tab-bar {
-  display: flex;
-  background-color: var(--bg-card);
-  border-radius: 8px;
-  padding: 4px;
-  margin-bottom: 16px;
-  gap: 4px;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 7px 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: none;
-  color: var(--text-muted);
-}
-
-.tab-btn.active {
-  background-color: var(--accent-gold);
-  color: #000;
-  font-weight: 600;
-}
-
-.tab-btn:not(.active):hover {
-  color: var(--text-secondary);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* ===== ALERT ITEMS ===== */
 .alerts-list {
   display: flex;
   flex-direction: column;
@@ -682,7 +374,6 @@ body {
   overflow: hidden;
 }
 
-/* ===== PREMIUM BADGE ===== */
 .premium-badge {
   display: flex;
   align-items: center;
@@ -726,7 +417,6 @@ body {
   line-height: 1;
 }
 
-/* ===== MILESTONE EDIT ICON ===== */
 .edit-icon-wrap {
   position: absolute;
   top: 16px;
@@ -744,22 +434,4 @@ body {
 
 .edit-icon-wrap:hover {
   color: var(--accent-gold);
-}
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
 }
