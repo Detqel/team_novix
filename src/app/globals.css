@@ -1,3 +1,35 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-deep: #111110;
+  --bg-surface: #1a1a18;
+  --bg-card: #1f1f1c;
+  --bg-elevated: #252522;
+  --gold: #d4a017;
+  --gold-light: #e8b84b;
+  --gold-dim: rgba(212, 160, 23, 0.15);
+  --text-primary: #f0ece0;
+  --text-secondary: #8a8678;
+  --text-muted: #5a5850;
+  --border: rgba(212, 160, 23, 0.12);
+  --border-hover: rgba(212, 160, 23, 0.35);
+  --green: #4caf7d;
+  --red: #e05555;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+
+
+
 body {
   margin: 0;
   background: #0b0b0f;
