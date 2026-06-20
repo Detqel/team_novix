@@ -1,29 +1,6 @@
-/* ===== CSS VARIABLES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
-:root {
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --bg-card: #1c1c1c;
-  --bg-card-hover: #222222;
-  --accent-gold: #f5c518;
-  --accent-gold-dim: #c9a010;
-  --accent-gold-light: #ffd740;
-  --text-primary: #ffffff;
-  --text-secondary: #aaaaaa;
-  --text-muted: #666666;
-  --border-color: #2a2a2a;
-  --border-gold: rgba(245, 197, 24, 0.3);
-  --success: #4caf50;
-  --warning: #ff9800;
-  --danger: #f44336;
-  --info: #2196f3;
-  --sidebar-width: 200px;
-  --font-main: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-}
-
-/* ===== RESET ===== */
-
-* {
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -250,6 +227,11 @@ input {
   padding: 12px;
   border-radius: 10px;
   color: var(--text-primary);
+/* INPUT — reset, let components style themselves */
+input, select, textarea {
+  font-family: inherit;
+  color: inherit;
+  box-sizing: border-box;
 }
 
 /* ===== LOGIN ===== */
@@ -260,6 +242,7 @@ input {
   justify-content: center;
   align-items: center;
   background: var(--bg-primary);
+  background: #0b0b0f;
 }
 
 .login-box {
@@ -271,6 +254,13 @@ input {
 }
 
 /* ===== CARDS ROW ===== */
+  background: #18181F;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(245,197,24,0.08);
+}
+
+/* CARDS ROW */
 
 .cards {
   display: grid;
@@ -295,7 +285,7 @@ input {
   height: 250px;
   border-radius: 20px;
   margin-top: 20px;
-  background: linear-gradient(180deg, rgba(245, 197, 24, 0.2), transparent);
+  background: linear-gradient(180deg, rgba(245,197,24,0.2), transparent);
 }
 
 .donut-card {

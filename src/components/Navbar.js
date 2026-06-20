@@ -28,5 +28,5 @@ const s = {
     fontFamily: "'Cinzel', serif", fontSize: "18px",
     fontWeight: 700, color: "#D4A017", letterSpacing: "0.04em",
   },
-  actions: { display: "flex", alignItems: "center", gap: "10px" },
+  actions: { display: "flex", alignItems: "center", gap: "10px" ,  flexShrink: 0, },
 };
