@@ -1,4 +1,11 @@
 require("dotenv").config();
+
+console.log("HOST =", process.env.DB_HOST);
+console.log("PORT =", process.env.DB_PORT);
+console.log("DB =", process.env.DB_NAME);
+console.log("USER =", process.env.DB_USER);
+console.log("PASSWORD =", process.env.DB_PASSWORD);
+
 const pool = require("./connection");
 
 async function testConnection() {
